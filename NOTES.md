@@ -233,6 +233,12 @@ We will have to move the state i.e. the counters and all the functions that modi
 ## Lifecycle Hooks 
 The components goes through different phases during their lifecycle. The first phase is the `Mounting` phase. and this is when an instance of a component is created and inserted into the DOM (Document Object Model). There are a few special method that we can add to our components and React will automatically call these methods. We refer to these methods as lifecycle hooks as they allow us to hook into certain moments during the lifecycle of a component and do something.
 
+React will call these functions in order in each phase. 
+
+There are more lifecycle hooks but these are the one which are commonly used.
+
+![React Lifecycle Hooks diagram](/public/lifecycleHooks.png)
+
 ### 1. Mount
   #### Constructor
   Constructor is called only once when an instance of a class is created. This is where you can initialise the default state to the properties received in props from the outside. We can't use `this.setState()` to initialise the state.    
@@ -293,12 +299,19 @@ componentDidUpdate(prevProps, prevState) {
 }
 ```
 ### 3. Unmount 
-(when a component is removed from the DOM i.e. deleting a counter)
+When a component is removed from the DOM i.e. deleting a counter.
+The componentWillUnmount method is called just before a component is removed from the DOM. 
 
-React will call these functions in order in each phase. 
+When we delete a counter we will be able to see the unmount message in the console. As a result of deleting the counter, the state of the App component is changed. So, our entire component is re rendered, i.e. we endup with `app -> navbar/counters -> 3x counter`. We have a new virtual DOM which has one less counter. React will compare this new Virtual DOM with the old one, it figures out that one of the counter is removed, so then it will call the componentWillUnmount <strong>before<strong> removing the (deleted) counter from the actual DOM. 
 
-There are more lifecycle hooks but these are the one which are commonly used.
+This gives us an oppurtunity to do any kind of cleanup such as if we have setup timers, or listeners, we can clean those up before this component is removed from the DOM. Otherwise, we'll end up with memory leaks.
 
-![React Lifecycle Hooks diagram](/public/lifecycleHooks.png)
+```javascript
+//counter.jsx
+componentWillUnmount() {
+  console.log('Counter - Unmounted');
+}
+```
+
 
 # setState
