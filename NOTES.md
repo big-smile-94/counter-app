@@ -229,3 +229,16 @@ In situation like the one above when there is no parent child relationship betwe
 
 We will have to move the state i.e. the counters and all the functions that modify the state to the parent App component from Counters component.
 ![New Counter App component tree diagram](/public/multipleComponentsInSync2.png)
+
+## Lifecycle Hooks 
+The components goes through different phases during their lifecycle. The first phase is the `Mounting` phase. and this is when an instance of a component is created and inserted into the DOM (Document Object Model). There are a few special method that we can add to our components and React will automatically call these methods. We refer to these methods as lifecycle hooks as they allow us to hook into certain moments during the lifecycle of a component and do something.
+
+1. Mount 
+2. Update (this happens when the state or the props of a component change)
+3. Unmount (when a component is removed from the DOM i.e. deleting a counter)
+
+React will call these functions in order in each phase. 
+
+There are more lifecycle hooks but these are the one which are commonly used.
+
+![React Lifecycle Hooks diagram](/public/lifecycleHooks.png)
