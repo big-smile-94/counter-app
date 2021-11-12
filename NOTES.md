@@ -233,12 +233,72 @@ We will have to move the state i.e. the counters and all the functions that modi
 ## Lifecycle Hooks 
 The components goes through different phases during their lifecycle. The first phase is the `Mounting` phase. and this is when an instance of a component is created and inserted into the DOM (Document Object Model). There are a few special method that we can add to our components and React will automatically call these methods. We refer to these methods as lifecycle hooks as they allow us to hook into certain moments during the lifecycle of a component and do something.
 
-1. Mount 
-2. Update (this happens when the state or the props of a component change)
-3. Unmount (when a component is removed from the DOM i.e. deleting a counter)
+### 1. Mount
+  #### Constructor
+  Constructor is called only once when an instance of a class is created. This is where you can initialise the default state to the properties received in props from the outside. We can't use `this.setState()` to initialise the state.    
+
+  ```javascript
+    constructor(props) {
+      super(props);
+      console.log('App - Constructor', this.props);
+      this.state = this.props.something;
+    }
+  ```
+  #### Render
+  Render basically returns a react element that represents our virtual DOM. Then React gets that virtual DOM and render it in the actual browser DOM and then our component is mounted. So When a component is mounted that means the component is in the DOM. When a component is rendered all it's children are also rendered recursively in order i.e. the following will be the order in which all the components are rendered. 
+
+  ![React Lifecycle Hooks proof diagram](/public/lifecycleHooksProof.png)
+
+  ```javascript
+  render() {
+      console.log('App - Rendered');
+  }
+  ```
+  #### componentDidMount
+  componentDidMount is called after our component is rendered into the actual browser DOM. Basically this lifecycle hook is called when a component is mounted that means the component is in the actual browser DOM and not the Virtual React DOM. It's a perfect place to make AJAX/api calls to get data from server. 
+     
+  ```javascript
+  componentDidMount() {
+    console.log('App - Mounted');
+  }
+  ```
+
+
+### 2. Update 
+This happens whenever the state or the props of a component changes.
+
+As an example we can look at the increment button which updates the state of the App component (by using setState). So the setState will schedule a call to the render method so our app is going to be rendered which means all it's children are going to be rendered as well. When we click on the increment button our entire component tree is rendered (this does not mean the entire DOM is updated). When a cmponent is rendered, we basically get a React element, so that is updating our virtual DOM. React will then look at the virtual DOM, it also has a copy of the old virtual DOM, that's why we should not update the state directly, so we can have two different object references in memory. We have the old virtual DOM as well as the new virtual DOM. Then React will figure out what has changed, and based on that it will update the real DOM accordingly. Even though we have several counters in this App when we click on an increment button only the span which contains the counts is updated. Nothing else will be updated. (Can look into the broswer console window to see which element updates)
+
+componentDidUpdate method is called after a component is updated. Which means we have new state or new props, so we can compare this new state with the old state or the new props with the old props. If there is a change we can make an AJAX/api call to get new data from the server. If there are no changes perhaps we don't want to make an additional AJAX request, this is an optimisation technique. componentDidUpdate(preProps, prevState) can be logged to see the old and the new props/state when we click on the increment button. 
+
+
+```javascript
+//App.jsx
+handleIncrement = (counter) => {
+  ...
+  this.setState({ counters });
+};
+
+// Counter.jsx
+componentDidUpdate(prevProps, prevState) {
+  console.log('prevProps', prevProps);
+  console.log('prevState', prevState);
+
+  // prevProps counter vlaue is different from the current props counter value 
+  // we can make an ajax call and get the new data 
+  // else don't make any request i.e. we can decide
+  if (prevProps.counter.value !== this.props.counter.value) {
+    // Ajax call to the server to get new data from the server
+  }
+}
+```
+### 3. Unmount 
+(when a component is removed from the DOM i.e. deleting a counter)
 
 React will call these functions in order in each phase. 
 
 There are more lifecycle hooks but these are the one which are commonly used.
 
 ![React Lifecycle Hooks diagram](/public/lifecycleHooks.png)
+
+# setState

@@ -6,7 +6,17 @@ class Counter extends Component {
     return value === 0 ? 'Zero' : value;
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log('prevProps', prevProps);
+    console.log('prevState', prevState);
+    if (prevProps.counter.value !== this.props.counter.value) {
+      // Ajax call to the server to get new data from the server
+    }
+  }
+
   render() {
+    console.log('Counter - Rendered');
+
     const { counter, onDelete, onIncrement } = this.props;
     return (
       <div>
