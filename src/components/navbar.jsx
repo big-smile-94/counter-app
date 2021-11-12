@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
+// Stateless Functional Component
+// sfc shortcut for creating stateless functional component
 
-class NavBar extends Component {
-  render() {
-    return (
-      <nav className="navbar navbar-light bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#'">
-            Navbar
-            <span className="badge rounded-pill bg-secondary m-2">
-              {this.props.totalCounters}
-            </span>
-          </a>
-        </div>
-      </nav>
-    );
-  }
-}
+const NavBar = (props) => {
+  return (
+    <nav className="navbar navbar-light bg-light">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#'">
+          Navbar
+          <span className="badge rounded-pill bg-secondary m-2">
+            {props.totalCounters}
+          </span>
+        </a>
+      </div>
+    </nav>
+  );
+};
 
 export default NavBar;
