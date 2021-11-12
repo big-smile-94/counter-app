@@ -1,14 +1,14 @@
 // Stateless Functional Component
 // sfc shortcut for creating stateless functional component
 
-const NavBar = (props) => {
+const NavBar = ({ totalCounters }) => {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container-fluid">
         <a className="navbar-brand" href="#'">
           Navbar
           <span className="badge rounded-pill bg-secondary m-2">
-            {props.totalCounters}
+            {totalCounters}
           </span>
         </a>
       </div>
