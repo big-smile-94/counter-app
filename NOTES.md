@@ -227,4 +227,5 @@ How can we display the total number of counters on our navigation bar?
 ### Solution 
 In situation like the one above when there is no parent child relationship between the two components, and we want to keep them in sync, you want to share the data between them. You will need to lift the state up. So, in this case we want to lift the state of the counters component to it's parent which is the App component. Now both the `Counters` and `NavBar` components will have the same parent, this is where we have the state so we pass it to all the children using props.
 
+We will have to move the state i.e. the counters and all the functions that modify the state to the parent App component from Counters component.
 ![New Counter App component tree diagram](/public/multipleComponentsInSync2.png)
