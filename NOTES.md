@@ -212,3 +212,19 @@ state = {
     this.setState({ counters })
   };
 ``` 
+
+## Multiple Components in Sync 
+
+Below is the component tree diagram of the Counter App at this point. However, a new requirement came to show the number of counters in the `NavBar` component.
+
+Earlier we passed the state of the counters component, to the counter component via props. That's because we have a parent and clild relationship between these two components. But as can be seen there is there is no parent child relationship between the counters component and navbar component. 
+
+### Problem 
+How can we display the total number of counters on our navigation bar? 
+
+![Old Counter App component tree diagram](/public/multipleComponentsInSync1.png)
+
+### Solution 
+In situation like the one above when there is no parent child relationship between the two components, and we want to keep them in sync, you want to share the data between them. You will need to lift the state up. So, in this case we want to lift the state of the counters component to it's parent which is the App component. Now both the `Counters` and `NavBar` components will have the same parent, this is where we have the state so we pass it to all the children using props.
+
+![New Counter App component tree diagram](/public/multipleComponentsInSync2.png)
