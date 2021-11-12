@@ -6,6 +6,11 @@ class Counter extends Component {
     return value === 0 ? 'Zero' : value;
   }
 
+  getBadgeClasses() {
+    let classes = 'badge m-2 badge-';
+    return (classes += this.props.counter.value === 0 ? 'warning' : 'primary');
+  }
+
   componentDidUpdate(prevProps, prevState) {
     console.log('prevProps', prevProps);
     console.log('prevState', prevState);
@@ -39,11 +44,6 @@ class Counter extends Component {
         </button>
       </div>
     );
-  }
-
-  getBadgeClasses() {
-    let classes = 'badge m-2 badge-';
-    return (classes += this.props.counter.value === 0 ? 'warning' : 'primary');
   }
 }
 

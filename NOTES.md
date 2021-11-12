@@ -11,6 +11,48 @@
 
 
 # Notes
+
+# Setting state 
+In React we do not modify the state directly. In other words we don't write code like the following to update the state. 
+
+```javascript
+ handleIncrement = () => {
+    this.state.count++;
+}
+``` 
+The above will not update the state. Technically, the value of the count property is being incremented but React is not aware of it. That's why it will not update the view. To solve this issue we will need to use one of the method that we inherit from the base component in React i.e. setState(). When we call this.setState we tell React that we're updating the state and it will figure out what part of the sate has changed and based on that it will bring the DOM in sync with the virtual DOM. 
+
+`this.setState()` is telling React that the state of this component is going to change. React will then schedule a call to the render method. So sometime in the future, this method is going to be called, we don't know when, this is an asynchronous call which means it's going to happen in the future. It may happen 5 or 10 milliseconds later, we don't know. So at somepoint in the future the render method is going to be called. The render method as can be seen below returns a new React element i.e. the `div` and it's children i.e. the `span` and `button`. So our virtual DOM is a tree of three elements as can be seen in the diagram. React will put the new virtual DOM tree and old virtual DOM tree side by side and compare them to figure out what elements in a virtual DOM are modified, In this case it realises that our `span` is modified because it is where we have used count property. React will react out to the real browser DOM, and update the corresponding span so it matches the one we have in the virtual DOM (new one after counter is incremented). No where else in the DOM is updated only that span element.
+
+![Virtual DOM - What happens when state changes](/public/virtualDOM-WhatHappensWhenStateChanges.png)
+
+```javascript
+class Counter extends Component {
+  state = {
+    count: 0
+  }
+  //... reset of the code
+  
+  handleIncrement = () => {
+    this.setState({ count: this.state.count + 1 })
+  }
+
+  render() {
+    return (
+      <div>
+        <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
+        <button
+          onClick={this.handleIncrement)}
+          className="btn btn-secondary btn-sm"
+        >
+          Increment
+        </button>
+      </div>
+    );
+}
+```
+
+
 ## Raising and Handling Events
 The component that owns a piece of the state, should be the one modifying it. An example of this is how `Counters` component updates the state and only passes data via props to the `Counter` components. 
 
@@ -314,4 +356,4 @@ componentWillUnmount() {
 ```
 
 
-# setState
+
